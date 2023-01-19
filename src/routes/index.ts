@@ -1,9 +1,11 @@
-import bodyParser from 'body-parser'
-import { Express } from 'express'
+import bodyParser from 'body-parser';
+import { Express } from 'express';
+import { personRoutes } from './person.routes';
 
-export const routes = (app: Express): void => {
+export function routes(app: Express): void {
     app.use(
         bodyParser.json(),
-        bodyParser.urlencoded({ extended: true })
+        bodyParser.urlencoded({ extended: true }),
+        personRoutes
     );
 };
