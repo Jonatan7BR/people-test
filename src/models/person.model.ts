@@ -1,3 +1,4 @@
+import { body } from "express-validator";
 import { DataTypes, Model, Sequelize } from "sequelize";
 
 export class Person extends Model {
