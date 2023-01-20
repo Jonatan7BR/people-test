@@ -63,4 +63,22 @@ export class PersonController {
             res.status(500).send({ message: 'Não foi possível atualizar a pessoa' });
         }
     }
+
+    static async deletePerson(req: Request, res: Response): Promise<void> {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.log(errors);
+            res.status(400).send({ message: 'ID inválido' });
+            return;
+        }
+        await personMap(sequelize);
+        const id = +req.params.id;
+        const person = await Person.findByPk(id);
+        if (!person) {
+            res.status(404).send({ message: `Não foi encontrada pessoa com ID ${id}` });
+            return;
+        }
+        await person.destroy();
+        res.status(201).send({ message: 'Pessoa excluída com sucesso'});
+    }
 }

@@ -10,3 +10,4 @@ personRoutes
     .get('/pessoas/:id', idValidator, PersonController.getPerson)
     .post('/pessoas', personValidator, PersonController.createPerson)
     .put('/pessoas/:id', idValidator, personValidator, PersonController.updatePerson)
+    .delete('/pessoas/:id', idValidator, PersonController.deletePerson);
