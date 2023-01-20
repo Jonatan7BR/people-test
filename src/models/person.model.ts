@@ -22,11 +22,14 @@ export async function personMap(sequelize: Sequelize): Promise<void> {
         lastName: { type: DataTypes.STRING(100) },
         age: { type: DataTypes.SMALLINT },
         gender: { type: DataTypes.STRING(1) },
-        identifier: { type: DataTypes.STRING(11) },
+        identifier: { 
+            type: DataTypes.STRING(11),
+            unique: true 
+        },
         email: { type: DataTypes.STRING(255) }
     }, {
         sequelize,
-        tableName: 'People'
+        tableName: 'People',
     });
     await Person.sync();
 }
