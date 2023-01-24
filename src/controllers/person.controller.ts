@@ -6,79 +6,37 @@ import { formatErrors } from "../utils/formatErrors";
 
 export class PersonController {
     
-    static async getAllPeople(_: Request, res: Response): Promise<void> {
+    async getAllPeople(): Promise<Person[]> {
         await personMap(sequelize);
-        const result = await Person.findAll();
-        res.status(200).send(result);
+        return await Person.findAll();
     }
 
-    static async getPerson(req: Request, res: Response): Promise<void> {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            console.log(errors);
-            res.status(400).send({ message: 'ID inválido' });
-            return;
-        }
+    async getPerson(id: number): Promise<Person | null> {
         await personMap(sequelize);
-        const id = +req.params.id;
-        const result = await Person.findByPk(id);
-        if (result) {
-            res.status(200).send(result);
-        } else {
-            res.status(404).send({ message: `Não foi encontrada pessoa com ID ${id}` });
-        }
+        return await Person.findByPk(id);
     }
 
-    static async createPerson(req: Request, res: Response): Promise<void> {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            res.status(422).send(formatErrors(errors));
-            return;
-        }
+    async createPerson(body: any): Promise<Person> {
         await personMap(sequelize);
-        const result = await Person.create(req.body);
-        if (result) {
-            res.status(201).send(result);
-        } else {
-            res.status(500).send({ message: 'Não foi possível cadastrar a pessoa' });
-        }
+        return await Person.create(body);
     }
 
-    static async updatePerson(req: Request, res: Response): Promise<void> {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            res.status(422).send(formatErrors(errors));
-        }
+    async updatePerson(id: number, body: any): Promise<Person | null> {
         await personMap(sequelize);
-        const id = +req.params.id;
         const person = await Person.findByPk(id);
         if (!person) {
-            res.status(404).send({ message: `Não foi encontrada pessoa com ID ${id}` });
-            return;
+            return null;
         }
-        const result = await person.update(req.body);
-        if (result) {
-            res.status(201).send(result);
-        } else {
-            res.status(500).send({ message: 'Não foi possível atualizar a pessoa' });
-        }
+        return await person.update(body);
     }
 
-    static async deletePerson(req: Request, res: Response): Promise<void> {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            console.log(errors);
-            res.status(400).send({ message: 'ID inválido' });
-            return;
-        }
+    async deletePerson(id: number): Promise<boolean> {
         await personMap(sequelize);
-        const id = +req.params.id;
         const person = await Person.findByPk(id);
         if (!person) {
-            res.status(404).send({ message: `Não foi encontrada pessoa com ID ${id}` });
-            return;
+            return false;
         }
         await person.destroy();
-        res.status(201).send({ message: 'Pessoa excluída com sucesso'});
+        return true;
     }
 }
