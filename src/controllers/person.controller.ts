@@ -1,8 +1,5 @@
-import { Request, Response } from "express";
-import { validationResult } from "express-validator";
 import { sequelize } from "../config/sequelize";
 import { Person, personMap } from "../models/person.model";
-import { formatErrors } from "../utils/formatErrors";
 
 export class PersonController {
     
