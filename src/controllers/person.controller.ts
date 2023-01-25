@@ -2,32 +2,38 @@ import { sequelize } from "../config/sequelize";
 import { Person, personMap } from "../models/person.model";
 
 export class PersonController {
-    
-    async getAllPeople(): Promise<Person[]> {
-        await personMap(sequelize);
-        return await Person.findAll();
-    }
 
-    async getPerson(id: number): Promise<Person | null> {
+    constructor(
+        private readonly orm = sequelize,
+        private readonly person = Person,
+        private readonly map = personMap
+    ) {}
+    
+    getAllPeople = async (): Promise<Person[]> => {
+        await this.map(this.orm);
+        return await this.person.findAll();
+    };
+
+    getPerson = async (id: number): Promise<Person | null> => {
         await personMap(sequelize);
         return await Person.findByPk(id);
-    }
+    };
 
-    async createPerson(body: any): Promise<Person> {
+    createPerson = async (body: any): Promise<Person> => {
         await personMap(sequelize);
         return await Person.create(body);
-    }
+    };
 
-    async updatePerson(id: number, body: any): Promise<Person | null> {
+    updatePerson = async (id: number, body: any): Promise<Person | null> => {
         await personMap(sequelize);
         const person = await Person.findByPk(id);
         if (!person) {
             return null;
         }
         return await person.update(body);
-    }
+    };
 
-    async deletePerson(id: number): Promise<boolean> {
+    deletePerson = async (id: number): Promise<boolean> => {
         await personMap(sequelize);
         const person = await Person.findByPk(id);
         if (!person) {
@@ -35,5 +41,5 @@ export class PersonController {
         }
         await person.destroy();
         return true;
-    }
+    };
 }

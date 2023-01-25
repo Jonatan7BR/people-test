@@ -10,7 +10,7 @@ export class Person extends Model {
     declare email: string;
 }
 
-export async function personMap(sequelize: Sequelize): Promise<void> {
+export const personMap = async (sequelize: Sequelize): Promise<void> => {
     Person.init({
         id: {
             type: DataTypes.INTEGER,
@@ -31,4 +31,4 @@ export async function personMap(sequelize: Sequelize): Promise<void> {
         tableName: 'People',
     });
     await Person.sync();
-}
+};

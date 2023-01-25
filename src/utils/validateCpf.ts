@@ -1,4 +1,4 @@
-export function validateCpf(cpf: string): boolean {
+export const validateCpf = (cpf: string): boolean => {
     if (!/^\d{11}$/.test(cpf) || /^(\d)\1+$/.test(cpf)) {
         return false;
     }

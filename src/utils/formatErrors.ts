@@ -4,6 +4,6 @@ interface Message {
     message: string[];
 }
 
-export function formatErrors(errors: Result<ValidationError>): Message {
-    return { message: errors.array().map(e => `${e.param} - ${e.msg}`).sort() };
-}
+export const formatErrors = (errors: Result<ValidationError>): Message => ({ 
+    message: errors.array().map(e => `${e.param} - ${e.msg}`).sort() 
+});
