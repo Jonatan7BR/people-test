@@ -1,14 +1,6 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 
-export class Person extends Model {
-    declare id?: number;
-    declare firstName: string;
-    declare lastName: string;
-    declare age: number;
-    declare gender: string;
-    declare identifier: string;
-    declare email: string;
-}
+export class Person extends Model {}
 
 export const personMap = async (sequelize: Sequelize): Promise<void> => {
     Person.init({

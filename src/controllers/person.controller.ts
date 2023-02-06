@@ -4,8 +4,8 @@ import { Person, personMap } from "../models/person.model";
 export class PersonController {
 
     constructor(
-        private readonly orm = sequelize,
         private readonly person = Person,
+        private readonly orm = sequelize,
         private readonly map = personMap
     ) {}
     

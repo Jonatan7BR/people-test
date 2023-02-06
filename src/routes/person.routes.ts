@@ -6,7 +6,7 @@ import { idValidator } from "../validators";
 import { personValidator } from "../validators/person.validator";
 
 export const personRoutes = Router();
-const controller = new PersonController();
+export const controller = new PersonController();
 
 personRoutes
     .get('/pessoas', async (_: Request, res: Response) => {
