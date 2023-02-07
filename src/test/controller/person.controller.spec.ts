@@ -33,7 +33,7 @@ describe('Testing Person controller', () => {
 
     it('should return one person', async () => {
         const person = Person;
-        person.findOne = jest.fn().mockReturnValue(personRes);
+        person.findByPk = jest.fn().mockReturnValue(personRes);
         const controller = new PersonController(person);
 
         const result = await controller.getPerson(id);
@@ -47,5 +47,26 @@ describe('Testing Person controller', () => {
 
         const result = await controller.createPerson(personReq);
         expect(result).toBe(personRes);
+    });
+
+    it('should update a person', async () => {
+        const person = Person;
+        const personObject = new Person(personRes);
+
+        person.findByPk = jest.fn().mockReturnValue(personObject);
+        personObject.update = jest.fn().mockReturnValue(personRes);
+        const controller = new PersonController(person);
+
+        const result = await controller.updatePerson(id, personReq);
+        expect(result).toBe(personRes);
+    });
+
+    it('should not update if no person found', async () => {
+        const person = Person;
+        person.findByPk = jest.fn().mockReturnValue(null);
+        const controller = new PersonController(person);
+
+        const result = await controller.updatePerson(id, personReq);
+        expect(result).toBeNull();
     });
 });

@@ -15,17 +15,17 @@ export class PersonController {
     };
 
     getPerson = async (id: number): Promise<Person | null> => {
-        await personMap(sequelize);
+        await personMap(this.orm);
         return await Person.findByPk(id);
     };
 
     createPerson = async (body: any): Promise<Person> => {
-        await personMap(sequelize);
+        await personMap(this.orm);
         return await Person.create(body);
     };
 
     updatePerson = async (id: number, body: any): Promise<Person | null> => {
-        await personMap(sequelize);
+        await personMap(this.orm);
         const person = await Person.findByPk(id);
         if (!person) {
             return null;
@@ -34,7 +34,7 @@ export class PersonController {
     };
 
     deletePerson = async (id: number): Promise<boolean> => {
-        await personMap(sequelize);
+        await personMap(this.orm);
         const person = await Person.findByPk(id);
         if (!person) {
             return false;
