@@ -21,6 +21,11 @@ describe('Testing Person controller', () => {
         jest.resetAllMocks();
     });
 
+    it('should init the controller', () => {
+        const controller = new PersonController();
+        expect(controller).toBeTruthy();
+    });
+
     it('should return all people', async () => {
         const person = Person;
         person.findAll = jest.fn().mockReturnValue([personRes]);
@@ -28,7 +33,7 @@ describe('Testing Person controller', () => {
 
         const result = await controller.getAllPeople();
         expect(result).toHaveLength(1);
-        expect(result[0]).toBe(personRes);
+        expect(result).toContain(personRes);
     });
 
     it('should return one person', async () => {
@@ -68,5 +73,26 @@ describe('Testing Person controller', () => {
 
         const result = await controller.updatePerson(id, personReq);
         expect(result).toBeNull();
+    });
+
+    it('should remove a person', async () => {
+        const person = Person;
+        const personObject = new Person(personRes);
+
+        person.findByPk = jest.fn().mockReturnValue(personObject);
+        personObject.destroy = jest.fn();
+        const controller = new PersonController(person);
+
+        const result = await controller.deletePerson(id);
+        expect(result).toBeTruthy();
+    });
+
+    it('should not remove if no person found', async () => {
+        const person = Person;
+        person.findByPk = jest.fn().mockReturnValue(null);
+        const controller = new PersonController(person);
+
+        const result = await controller.deletePerson(id);
+        expect(result).toBeFalsy();
     });
 });
