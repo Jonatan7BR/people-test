@@ -16,4 +16,4 @@ export const validateCpf = (cpf: string): boolean => {
         .reduce((p, c) => p + c) % 11;
 
     return d1 % 10 === digits[9] && d2 % 10 === digits[10];
-}
+};

@@ -7,5 +7,6 @@ export const sequelize = new Sequelize({
     password: DB_PASSWORD,
     host: DB_HOST,
     port: DB_PORT,
-    dialect: DB_DIALECT
+    dialect: DB_DIALECT,
+    logging: false
 });
