@@ -41,7 +41,6 @@ describe('Person routes', () => {
 
         request(app).get('/pessoas/1').expect(200).then(resolved => {
             const { body } = resolved;
-            console.log(body);
             expect(body).toHaveProperty('id', 1);
             expect(body).toHaveProperty('firstName', personData.firstName);
         });
